@@ -1,0 +1,80 @@
+<!-- Sidebar Header starts -->
+<div class="sidebar-header">
+  <div class="logo clearfix">
+    <i-feather class="icon-sidenav" name="align-left"></i-feather>
+    <a [routerLink]="['/']" class="logo-text float-left">
+      <img class="logo-img" [src]="logoUrl" alt="" />
+    </a>
+  </div>
+</div>
+<!-- Sidebar Header Ends -->
+
+<!-- Sidebar Content starts -->
+<div class="sidebar-content" [perfectScrollbar]>
+  <div class="nav-container">
+    <ul class="navigation" appSidebarList>
+      <!-- First level menu -->
+      <li
+        appSidebarlink
+        level="{{ depth + 1 }}"
+        (toggleEmit)="handleToggle($event)"
+        (click)="toggleSlideInOut()"
+        [routePath]="menuItem.path"
+        [classes]="menuItem.class"
+        [title]="menuItem.title"
+        [parent]=""
+        *ngFor="let menuItem of menuItems"
+        [ngClass]="{
+          'has-sub': menuItem.class === 'has-sub',
+          open:
+            activeTitles.includes(menuItem.title) && !navCollapsedOpen,
+          'nav-collapsed-open':
+            navCollapsedOpen && activeTitles.includes(menuItem.title)
+        }"
+        [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a appSidebarAnchorToggle [routerLink]="[menuItem.path]">
+          <i-feather [name]="menuItem.icon"></i-feather>
+          <span class="menu-title">{{ menuItem.title }}</span>
+        </a>
+        <!-- Second level menu -->
+        <ul
+          class="menu-content"
+          *ngIf="menuItem.submenu.length > 0"
+          [@slideInOut]="activeTitles.includes(menuItem.title) ? true : false"
+        >
+          <li
+            appSidebarlink
+            level="{{ depth + 2 }}"
+            (toggleEmit)="handleToggle($event)"
+            [routePath]="menuSubItem.path"
+            [classes]="menuSubItem.class"
+            [title]="menuSubItem.title"
+            [parent]="menuItem.title"
+            *ngFor="let menuSubItem of menuItem.submenu"
+            [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'"
+            [ngClass]="{
+              'has-sub': menuSubItem.class === 'has-sub',
+              open:
+                activeTitles.includes(menuSubItem.title) && !navCollapsedOpen,
+              'nav-collapsed-open':
+                navCollapsedOpen && activeTitles.includes(menuSubItem.title)
+            }"
+          >
+            <a
+              appSidebarAnchorToggle
+              [routerLink]="
+                menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]
+              "
+            >
+              <i-feather name="menuSubItem.icon"></i-feather>
+              <span class="menu-title">{{ menuSubItem.title }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Sidebar Content Ends -->

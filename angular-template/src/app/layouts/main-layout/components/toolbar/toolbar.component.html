@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <div class="logo-type">
+    <button mat-icon-button (click)="toggleSidebar()">
+      <i-feather class="icon-sidenav" name="align-left"></i-feather>
+    </button>
+    <img
+      class="img-logo"
+      src="assets/images/logos/logo_united_mile_fleet.png"
+      alt="Logo"
+    />
+  </div>
+  <span class="example-fill-remaining-space"></span>
+  <div class="username-container" [matMenuTriggerFor]="menu">
+    <img
+      class="avatar-profile-header"
+      src="../../../assets/images/avatars/jeff-profile.jfif"
+      alt="Avatar photo"
+    />
+    <span class="username" fxHide fxShow.gt-sm>Username</span>
+  </div>
+  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
