@@ -202,8 +202,11 @@ $gray-800: #343a40;
 
     .main-panel {
       .main-content {
-        padding-left: 70px;
-        margin-top: 70px;
+        /* margin-top: 70px; */
+        max-width: 1250px;
+        padding: 0 70px;
+        margin-right: auto;
+        margin-left: auto;
       }
     }
 

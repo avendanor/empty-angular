@@ -18,6 +18,7 @@ import { FeatherIconsModule } from '@shared/feather-icons/feather-icons.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SidebarDirective } from './components/sidenav/directives/sidebar.directive';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ActivityModule } from '@app-main/activity/activity.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     RouterModule,
     MainRoutingModule,
     CommonModule,
-    DashboardModule
+    DashboardModule,
+    ActivityModule
   ],
   providers: [
     {

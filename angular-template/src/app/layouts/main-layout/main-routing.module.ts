@@ -21,6 +21,14 @@ const routes: Routes = [
           import('../../main/dashboard/dashboard.module').then(
             m => m.DashboardModule
           )
+      },
+      {
+        path: 'activity',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../../main/activity/activity.module').then(
+            m => m.ActivityModule
+          )
       }
     ]
   }

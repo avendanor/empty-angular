@@ -7,5 +7,12 @@ export const ROUTES: RouteInfo[] = [
     icon: 'grid',
     class: '',
     submenu: []
-  }
+  },
+  {
+    path: '/activity',
+    title: 'Test',
+    icon: 'activity',
+    class: '',
+    submenu: []
+  },
 ];
