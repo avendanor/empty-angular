@@ -9,10 +9,18 @@
     <!-- RECRUITER ADMIN -->
     <div fxLayout="row" fxLayoutGap="1em">
       <div fxLayout="column" fxLayoutGap="10px" style="width: 100%; height: 85vh;">
-        <div class="target" fxFlex="50" style="width: 100%;" #container>
-          <apx-chart *ngIf="change" [series]="chartOptions.series" [chart]="chartOptions.chart"
+        <div fxLayout="column" fxFlex="50" style="width: 100%;" #container fxLayoutGap="10px">
+          <div class="target" fxFlex="50" fxLayoutAlign="center center" style="position: relative;">
+            <span class="title-true"style="">Real</span>
+            <div class="number">13000</div>
+          </div>
+          <div class="target" fxFlex="50" fxLayoutAlign="center center" style="position: relative;">
+            <span class="title-false">Fake</span>
+            <div class="number">14000</div>
+          </div>
+          <!-- <apx-chart *ngIf="change" [series]="chartOptions.series" [chart]="chartOptions.chart"
             [xaxis]="chartOptions.xaxis" [title]="chartOptions.title">
-          </apx-chart>
+          </apx-chart> -->
         </div>
         <div class="target" fxFlex="50" style="height: 20em;">
           <highcharts-chart id="container" [Highcharts]="Highcharts" [constructorType]="chartConstructor"
@@ -23,33 +31,37 @@
       <div fxLayout="row" fxLayoutGap="10px" style="width: 100%; height: 85vh;">
         <div fxLayout="column" fxLayoutGap="10px" fxFlex="100">
           <div class="target" fxFlex="50" style="height: 20em;">
-            <table mat-table [dataSource]="dataList" class="course-table">
-              <ng-container matColumnDef="name">
+            <table mat-table [dataSource]="dataList" class="tweetsTable">
+              <ng-container matColumnDef="tweet">
                 <th mat-header-cell *matHeaderCellDef class="title-header">
                   <div>
-                    Trainer and Course
+                    Tweet
                   </div>
                 </th>
                 <td mat-cell *matCellDef="let element">
                   <div>
-                    <div class="name">{{element.created_by.first_name | titlecase }}
-                      {{element.created_by.last_name | titlecase}}</div>
-                    <div fxLayoutAlign="center">
-                      <div class="subtitle-name">
-                        {{element.wav_number}}
-                      </div>
-                    </div>
+                    
                   </div>
                 </td>
               </ng-container>
           
-              <ng-container matColumnDef="trainees">
+              <ng-container matColumnDef="country">
                 <th mat-header-cell *matHeaderCellDef class="title-header">
-                  Number of Course
+                  Country
                 </th>
                 <td mat-cell *matCellDef="let element">
-                  <span class="subtitle"
-                    style='color:#4b2cdc; font-size: 11px;'><b>{{ element.trained_number }}</b></span>
+                  <div class="div">
+                    
+                  </div>
+                </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef class="title-header">
+                  City
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="div"></div>
                 </td>
               </ng-container>
           
@@ -58,7 +70,21 @@
             </table>
           </div>
           <div class="target" fxFlex="50" style="height: 20em;">
-
+            <div style="height: 50%;" #container2>
+              <apx-chart *ngIf="change"
+                [series]="chartOptions3.series"
+                [chart]="chartOptions3.chart"
+                [labels]="chartOptions3.labels"
+                [responsive]="chartOptions3.responsive"
+              ></apx-chart>
+            </div>
+            <mat-divider></mat-divider>
+              <angular-tag-cloud
+                [data]="data"
+                [width]="options.width"
+                [height]="options.height"
+                [overflow]="options.overflow">
+              </angular-tag-cloud>
           </div>
         </div>
         <!-- <div fxLayout="column" fxLayoutGap="10px" fxFlex="50">

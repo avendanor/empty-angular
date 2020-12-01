@@ -19,3 +19,15 @@
     border-radius: 5px;
     box-shadow: 0 2px 7px 0 #a4a5a6;
 }
+.tweetsTable{
+    width: 100%;
+}
+.title-false{
+    position: absolute; top: 0.5em; left: 0.5em; font-size: 2em; color: red;
+}
+.title-true{
+    position: absolute; top: 0.5em; left: 0.5em; font-size: 2em; color: green;
+}
+.number{
+    font-size: 3em; color: gray;
+}

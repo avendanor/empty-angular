@@ -19,9 +19,10 @@ export class ActivityComponent extends UnsubscribeOnDestroyAdapter
   chartData = [{ code3: "ABW", z: 105 }, { code3: "AFG", z: 35530 }];
   mapWorld = require('@highcharts/map-collection/custom/world.geo.json')
   public displayedColumns = [
-    'name',
-    'trainees'
-];
+    'tweet',
+    'country',
+    'city',
+  ];
 public dataList = [];
 
   chartOptions2: Highcharts.Options = {
@@ -283,6 +284,7 @@ public dataList = [];
     super();
   }
   @ViewChild('container') public myIdentifier: ElementRef;
+  @ViewChild('container2') public myIdentifier2: ElementRef;
   @ViewChild("chart") chart: ChartComponent;
   public change = true;
   public chartOptions={
@@ -303,12 +305,44 @@ public dataList = [];
       categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep"]
     }
   };
+  public chartOptions3: any = {
+    series: [44, 55, 13, 43, 22],
+    chart: {
+      type: "donut"
+    },
+    labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
+    ]
+  };
+  options = {
+    // if width is between 0 and 1 it will be set to the size of the upper element multiplied by the value 
+    width : 100,
+    height : 400,
+    overflow: false,
+  };
+ 
+  data = [
+    {text: 'Weight-8-link-color', weight: 8, link: 'https://google.com', color: '#ffaaee'},
+    {text: 'Weight-10-link', weight: 10, link: 'https://google.com', tooltip: 'display a tooltip'},
+  ];
 
   ngOnInit() {}
   ngAfterViewInit() {
     this.change = false;
     setTimeout(() => {
       this.chartOptions.chart.height = (this.myIdentifier.nativeElement.offsetHeight * 0.99);
+      this.chartOptions3.chart.height = (this.myIdentifier2.nativeElement.offsetHeight * 0.99);
       console.log(this.myIdentifier.nativeElement.offsetHeight.toString());
       this.change = true;
     }, 100);
