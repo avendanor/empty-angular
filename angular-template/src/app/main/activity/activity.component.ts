@@ -1,10 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UnsubscribeOnDestroyAdapter } from '@app-core/unsuscribe-adapter/unsuscribe-adapter';
-import * as Highcharts from "highcharts/highmaps";
-import mapdata from "./mapdata";
+import * as Highcharts from 'highcharts/highmaps';
+import mapdata from './mapdata';
 import MapModule from 'highcharts/modules/map';
 import { ChartComponent } from 'ng-apexcharts';
+import { interval, Subscription } from 'rxjs';
 /* import * as worldMap from "@highcharts/map-collection/custom/world.geo.json"; */
+import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpService } from '@app-core/http/http.service';
+import { forkJoin } from 'rxjs';
 mapdata(Highcharts);
 @Component({
   selector: 'app-activity',
@@ -13,24 +17,18 @@ mapdata(Highcharts);
 })
 
 export class ActivityComponent extends UnsubscribeOnDestroyAdapter
-  implements OnInit {
+  implements OnInit, AfterViewInit, OnDestroy {
     Highcharts: typeof Highcharts = Highcharts;
-  chartConstructor = "mapChart";
-  chartData = [{ code3: "ABW", z: 105 }, { code3: "AFG", z: 35530 }];
-  mapWorld = require('@highcharts/map-collection/custom/world.geo.json')
-  public displayedColumns = [
-    'tweet',
-    'country',
-    'city',
-  ];
-public dataList = [];
+  chartConstructor = 'mapChart';
+  chartData = [{ code3: 'ABW', z: 105 }, { code3: 'AFG', z: 35530 }];
+  mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
 
-  chartOptions2: Highcharts.Options = {
+  chartOptions2: any = {
     chart: {
       map: this.mapWorld as any
     },
     title: {
-      text: "Highmaps basic demo"
+      text: 'Highmaps basic demo'
     },
     subtitle: {
       text:
@@ -39,7 +37,7 @@ public dataList = [];
     mapNavigation: {
       enabled: true,
       buttonOptions: {
-        alignTo: "spacingBox"
+        alignTo: 'spacingBox'
       }
     },
     legend: {
@@ -50,267 +48,62 @@ public dataList = [];
     },
     series: [
       {
-        type: "map",
-        name: "Random data",
+        type: 'map',
+        name: 'Tweets data',
         states: {
           hover: {
-            color: "#BADA55"
+            color: '#BADA55'
           }
         },
         dataLabels: {
           enabled: true,
-          format: "{point.name}"
+          format: '{point.name}'
         },
         allAreas: false,
-        data: [
-          ["fo", 0],
-          ["um", 1],
-          ["us", 2],
-          ["jp", 3],
-          ["sc", 4],
-          ["in", 5],
-          ["fr", 6],
-          ["fm", 7],
-          ["cn", 8],
-          ["pt", 9],
-          ["sw", 10],
-          ["sh", 11],
-          ["br", 12],
-          ["ki", 13],
-          ["ph", 14],
-          ["mx", 15],
-          ["es", 16],
-          ["bu", 17],
-          ["mv", 18],
-          ["sp", 19],
-          ["gb", 20],
-          ["gr", 21],
-          ["as", 22],
-          ["dk", 23],
-          ["gl", 24],
-          ["gu", 25],
-          ["mp", 26],
-          ["pr", 27],
-          ["vi", 28],
-          ["ca", 29],
-          ["st", 30],
-          ["cv", 31],
-          ["dm", 32],
-          ["nl", 33],
-          ["jm", 34],
-          ["ws", 35],
-          ["om", 36],
-          ["vc", 37],
-          ["tr", 38],
-          ["bd", 39],
-          ["lc", 40],
-          ["nr", 41],
-          ["no", 42],
-          ["kn", 43],
-          ["bh", 44],
-          ["to", 45],
-          ["fi", 46],
-          ["id", 47],
-          ["mu", 48],
-          ["se", 49],
-          ["tt", 50],
-          ["my", 51],
-          ["pa", 52],
-          ["pw", 53],
-          ["tv", 54],
-          ["mh", 55],
-          ["cl", 56],
-          ["th", 57],
-          ["gd", 58],
-          ["ee", 59],
-          ["ag", 60],
-          ["tw", 61],
-          ["bb", 62],
-          ["it", 63],
-          ["mt", 64],
-          ["vu", 65],
-          ["sg", 66],
-          ["cy", 67],
-          ["lk", 68],
-          ["km", 69],
-          ["fj", 70],
-          ["ru", 71],
-          ["va", 72],
-          ["sm", 73],
-          ["kz", 74],
-          ["az", 75],
-          ["tj", 76],
-          ["ls", 77],
-          ["uz", 78],
-          ["ma", 79],
-          ["co", 80],
-          ["tl", 81],
-          ["tz", 82],
-          ["ar", 83],
-          ["sa", 84],
-          ["pk", 85],
-          ["ye", 86],
-          ["ae", 87],
-          ["ke", 88],
-          ["pe", 89],
-          ["do", 90],
-          ["ht", 91],
-          ["pg", 92],
-          ["ao", 93],
-          ["kh", 94],
-          ["vn", 95],
-          ["mz", 96],
-          ["cr", 97],
-          ["bj", 98],
-          ["ng", 99],
-          ["ir", 100],
-          ["sv", 101],
-          ["sl", 102],
-          ["gw", 103],
-          ["hr", 104],
-          ["bz", 105],
-          ["za", 106],
-          ["cf", 107],
-          ["sd", 108],
-          ["cd", 109],
-          ["kw", 110],
-          ["de", 111],
-          ["be", 112],
-          ["ie", 113],
-          ["kp", 114],
-          ["kr", 115],
-          ["gy", 116],
-          ["hn", 117],
-          ["mm", 118],
-          ["ga", 119],
-          ["gq", 120],
-          ["ni", 121],
-          ["lv", 122],
-          ["ug", 123],
-          ["mw", 124],
-          ["am", 125],
-          ["sx", 126],
-          ["tm", 127],
-          ["zm", 128],
-          ["nc", 129],
-          ["mr", 130],
-          ["dz", 131],
-          ["lt", 132],
-          ["et", 133],
-          ["er", 134],
-          ["gh", 135],
-          ["si", 136],
-          ["gt", 137],
-          ["ba", 138],
-          ["jo", 139],
-          ["sy", 140],
-          ["mc", 141],
-          ["al", 142],
-          ["uy", 143],
-          ["cnm", 144],
-          ["mn", 145],
-          ["rw", 146],
-          ["so", 147],
-          ["bo", 148],
-          ["cm", 149],
-          ["cg", 150],
-          ["eh", 151],
-          ["rs", 152],
-          ["me", 153],
-          ["tg", 154],
-          ["la", 155],
-          ["af", 156],
-          ["ua", 157],
-          ["sk", 158],
-          ["jk", 159],
-          ["bg", 160],
-          ["qa", 161],
-          ["li", 162],
-          ["at", 163],
-          ["sz", 164],
-          ["hu", 165],
-          ["ro", 166],
-          ["ne", 167],
-          ["lu", 168],
-          ["ad", 169],
-          ["ci", 170],
-          ["lr", 171],
-          ["bn", 172],
-          ["iq", 173],
-          ["ge", 174],
-          ["gm", 175],
-          ["ch", 176],
-          ["td", 177],
-          ["kv", 178],
-          ["lb", 179],
-          ["dj", 180],
-          ["bi", 181],
-          ["sr", 182],
-          ["il", 183],
-          ["ml", 184],
-          ["sn", 185],
-          ["gn", 186],
-          ["zw", 187],
-          ["pl", 188],
-          ["mk", 189],
-          ["py", 190],
-          ["by", 191],
-          ["cz", 192],
-          ["bf", 193],
-          ["na", 194],
-          ["ly", 195],
-          ["tn", 196],
-          ["bt", 197],
-          ["md", 198],
-          ["ss", 199],
-          ["bw", 200],
-          ["bs", 201],
-          ["nz", 202],
-          ["cu", 203],
-          ["ec", 204],
-          ["au", 205],
-          ["ve", 206],
-          ["sb", 207],
-          ["mg", 208],
-          ["is", 209],
-          ["eg", 210],
-          ["kg", 211],
-          ["np", 212]
-        ]
+        data: []
       }
     ]
   };
-  constructor() {
+  public tableData;
+  public countTable;
+  public mapaTable;
+  public cloudTable;
+  public pieTable;
+  subscription: Subscription;
+  public source = interval(45000);
+  public begin = 0;
+  public finish = 140;
+  constructor(private httpService: HttpService, private http: HttpClient, ) {
     super();
   }
+
   @ViewChild('container') public myIdentifier: ElementRef;
   @ViewChild('container2') public myIdentifier2: ElementRef;
-  @ViewChild("chart") chart: ChartComponent;
   public change = true;
-  public chartOptions={
+  public barOptions = {
     series: [
       {
-        name: "My-series",
+        name: 'My-series',
         data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
       }
     ],
     chart: {
       height: 350,
-      type: "bar"
+      type: 'bar'
     },
     title: {
-      text: "My First Angular Chart"
+      text: 'My First Angular Chart'
     },
     xaxis: {
-      categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep"]
+      categories: ['Jan', 'Feb',  'Mar',  'Apr',  'May',  'Jun',  'Jul',  'Aug', 'Sep']
     }
   };
-  public chartOptions3: any = {
-    series: [44, 55, 13, 43, 22],
+  public pieOptions: any = {
+    series: [0, 0, 0, 0, 0],
     chart: {
-      type: "donut"
+      type: 'donut'
     },
-    labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+    labels: ['', '', '', '', ''],
     responsive: [
       {
         breakpoint: 480,
@@ -319,32 +112,294 @@ public dataList = [];
             width: 200
           },
           legend: {
-            position: "bottom"
+            position: 'bottom'
           }
         }
       }
     ]
   };
-  options = {
-    // if width is between 0 and 1 it will be set to the size of the upper element multiplied by the value 
-    width : 100,
-    height : 400,
-    overflow: false,
-  };
- 
-  data = [
-    {text: 'Weight-8-link-color', weight: 8, link: 'https://google.com', color: '#ffaaee'},
-    {text: 'Weight-10-link', weight: 10, link: 'https://google.com', tooltip: 'display a tooltip'},
+  public countries: any = [
+    ['fo', 0],
+    ['us', 306],
+    ['um', 0],
+    ['jp', 7],
+    ['sc', 0],
+    ['in', 27],
+    ['fr', 2],
+    ['fm', 0],
+    ['cn', 0],
+    ['pt', 4],
+    ['sw', 0],
+    ['sh', 0],
+    ['br', 8],
+    ['ki', 0],
+    ['ph', 10],
+    ['mx', 0],
+    ['es', 4],
+    ['bu', 0],
+    ['mv', 0],
+    ['sp', 0],
+    ['gb', 30],
+    ['gr', 0],
+    ['as', 0],
+    ['dk', 0],
+    ['gl', 0],
+    ['gu', 0],
+    ['mp', 0],
+    ['pr', 0],
+    ['vi', 0],
+    ['ca', 26],
+    ['st', 0],
+    ['cv', 0],
+    ['dm', 0],
+    ['nl', 2],
+    ['jm', 2],
+    ['ws', 0],
+    ['om', 0],
+    ['vc', 0],
+    ['tr', 0],
+    ['bd', 0],
+    ['lc', 0],
+    ['nr', 0],
+    ['no', 2],
+    ['kn', 0],
+    ['bh', 0],
+    ['to', 0],
+    ['fi', 0],
+    ['id', 4],
+    ['mu', 0],
+    ['se', 0],
+    ['tt', 0],
+    ['my', 3],
+    ['pa', 0],
+    ['pw', 0],
+    ['tv', 0],
+    ['mh', 0],
+    ['cl', 0],
+    ['th', 2],
+    ['gd', 0],
+    ['ee', 0],
+    ['ag', 0],
+    ['tw', 0],
+    ['bb', 1],
+    ['it', 2],
+    ['mt', 0],
+    ['vu', 0],
+    ['sg', 0],
+    ['cy', 0],
+    ['lk', 0],
+    ['km', 0],
+    ['fj', 0],
+    ['ru', 0],
+    ['va', 0],
+    ['sm', 0],
+    ['kz', 0],
+    ['az', 0],
+    ['tj', 0],
+    ['ls', 1],
+    ['uz', 0],
+    ['ma', 0],
+    ['co', 1],
+    ['tl', 0],
+    ['tz', 0],
+    ['ar', 0],
+    ['sa', 0],
+    ['pk', 4],
+    ['ye', 0],
+    ['ae', 5],
+    ['ke', 6],
+    ['pe', 0],
+    ['do', 1],
+    ['ht', 0],
+    ['pg', 0],
+    ['ao', 0],
+    ['kh', 0],
+    ['vn', 0],
+    ['mz', 0],
+    ['cr', 0],
+    ['bj', 0],
+    ['ng', 13],
+    ['ir', 0],
+    ['sv', 0],
+    ['sl', 0],
+    ['gw', 0],
+    ['hr', 0],
+    ['bz', 0],
+    ['za', 10],
+    ['cf', 0],
+    ['sd', 0],
+    ['cd', 0],
+    ['kw', 0],
+    ['de', 4],
+    ['be', 2],
+    ['ie', 10],
+    ['kp', 0],
+    ['kr', 0],
+    ['gy', 0],
+    ['hn', 0],
+    ['mm', 0],
+    ['ga', 0],
+    ['gq', 0],
+    ['ni', 0],
+    ['lv', 0],
+    ['ug', 0],
+    ['mw', 0],
+    ['am', 0],
+    ['sx', 0],
+    ['tm', 0],
+    ['zm', 0],
+    ['nc', 0],
+    ['mr', 0],
+    ['dz', 0],
+    ['lt', 0],
+    ['et', 0],
+    ['er', 0],
+    ['gh', 0],
+    ['si', 0],
+    ['gt', 0],
+    ['ba', 0],
+    ['jo', 1],
+    ['sy', 0],
+    ['mc', 0],
+    ['al', 0],
+    ['uy', 3],
+    ['cnm', 0],
+    ['mn', 0],
+    ['rw', 0],
+    ['so', 0],
+    ['bo', 0],
+    ['cm', 0],
+    ['cg', 0],
+    ['eh', 0],
+    ['rs', 0],
+    ['me', 0],
+    ['tg', 0],
+    ['la', 0],
+    ['af', 0],
+    ['ua', 0],
+    ['sk', 0],
+    ['jk', 0],
+    ['bg', 0],
+    ['qa', 0],
+    ['li', 0],
+    ['at', 0],
+    ['sz', 0],
+    ['hu', 0],
+    ['ro', 0],
+    ['ne', 0],
+    ['lu', 0],
+    ['ad', 0],
+    ['ci', 0],
+    ['lr', 0],
+    ['bn', 0],
+    ['iq', 0],
+    ['ge', 6],
+    ['gm', 0],
+    ['ch', 0],
+    ['td', 0],
+    ['kv', 0],
+    ['lb', 1],
+    ['dj', 0],
+    ['bi', 0],
+    ['sr', 0],
+    ['il', 0],
+    ['ml', 0],
+    ['sn', 0],
+    ['gn', 0],
+    ['zw', 1],
+    ['pl', 0],
+    ['mk', 0],
+    ['py', 0],
+    ['by', 0],
+    ['cz', 0],
+    ['bf', 0],
+    ['na', 0],
+    ['ly', 0],
+    ['tn', 0],
+    ['bt', 0],
+    ['md', 0],
+    ['ss', 0],
+    ['bw', 0],
+    ['bs', 0],
+    ['nz', 3],
+    ['cu', 0],
+    ['ec', 0],
+    ['au', 21],
+    ['ve', 0],
+    ['sb', 0],
+    ['mg', 0],
+    ['is', 0],
+    ['eg', 0],
+    ['kg', 0],
+    ['np', 0]
   ];
+  public show = true;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.chartOptions2.series[0].data = this.countries;
+    forkJoin(
+      [this.tabla(), this.count(), this.mapa(), this.cloudWords(), this.pieChart()]
+    ).subscribe(([tableResp, countTable, mapaData, cloudData, pieData]) => {
+        this.tableData = tableResp;
+        this.countTable = countTable;
+        this.cloudTable = cloudData;
+        this.mapaTable = mapaData;
+        this.pieTable = pieData;
+        this.mapaTable = Object.entries(this.mapaTable);
+        this.pieOptions.series = Object.values(this.pieTable);
+        this.pieOptions.labels = Object.keys(this.pieTable);
+    });
+    this.subscription = this.source.subscribe(val => {
+      this.begin += 140;
+      this.finish += 140;
+      forkJoin(
+        [this.tabla(), this.count(), this.mapa(), this.cloudWords(), this.pieChart()]
+      ).subscribe(([tableResp, countTable, mapaData, cloudData, pieData]) => {
+        this.tableData = tableResp;
+        this.countTable = countTable;
+        this.cloudTable = cloudData;
+        this.mapaTable = mapaData;
+        this.pieTable = pieData;
+        this.mapaTable = Object.entries(this.mapaTable);
+        this.show = false;
+
+        this.chartOptions2.series[0].data = this.countries;
+        this.show = true;
+        this.pieOptions.series = Object.values(this.pieTable);
+        this.pieOptions.labels = Object.keys(this.pieTable);
+      });
+    });
+  }
+  tabla() {
+    const params = new HttpParams();
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(`https://pfi76iz4wl.execute-api.us-east-1.amazonaws.com/default/tabla?begin=${this.begin}&limit=${this.finish}`, {params});
+  }
+  count() {
+    const params = new HttpParams();
+    return this.http.get(`https://ppwgioyvr5.execute-api.us-east-1.amazonaws.com/prod/test?limit=${this.finish}`, {params});
+  }
+  mapa() {
+    const params = new HttpParams();
+    return this.http.get(`https://lmcg4lv97e.execute-api.us-east-1.amazonaws.com/default/mapa?limit=${this.finish}`, {params});
+  }
+  cloudWords() {
+    const params = new HttpParams();
+    return this.http.get(`https://7i3bwk4vy1.execute-api.us-east-1.amazonaws.com/default/nube_palabras?limit=${this.finish}`, {params});
+  }
+  pieChart() {
+    const params = new HttpParams();
+    return this.http.get(`https://0kydqqayq4.execute-api.us-east-1.amazonaws.com/default/pie_chart?limit=${this.finish}`, {params});
+  }
   ngAfterViewInit() {
     this.change = false;
     setTimeout(() => {
-      this.chartOptions.chart.height = (this.myIdentifier.nativeElement.offsetHeight * 0.99);
-      this.chartOptions3.chart.height = (this.myIdentifier2.nativeElement.offsetHeight * 0.99);
-      console.log(this.myIdentifier.nativeElement.offsetHeight.toString());
+      this.barOptions.chart.height = (this.myIdentifier.nativeElement.offsetHeight * 0.99);
+      this.pieOptions.chart.height = (this.myIdentifier2.nativeElement.offsetHeight * 0.99);
       this.change = true;
     }, 100);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

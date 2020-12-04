@@ -6,12 +6,17 @@
     }
     
 }
-.header{
-    margin-top: 3.1em;
-    margin-bottom: 3.1em!important;
+header{
+    margin-top: 1.1em;
+    margin-bottom: 1.1em!important;
 }
 .main-title{
     color: #4b4b4b;
+    font-size: 1.5625em;
+    font-weight: 700;
+}
+.main-subtitle{
+    color: #1DA1F2;
     font-size: 1.5625em;
     font-weight: 700;
 }
@@ -19,15 +24,28 @@
     border-radius: 5px;
     box-shadow: 0 2px 7px 0 #a4a5a6;
 }
-.tweetsTable{
-    width: 100%;
-}
+
 .title-false{
-    position: absolute; top: 0.5em; left: 0.5em; font-size: 2em; color: red;
+    position: absolute; 
+    top: 0.5em; 
+    left: 0.5em; 
+    font-size: 2em; 
+    color: red;
+    font-weight: 600;
 }
 .title-true{
-    position: absolute; top: 0.5em; left: 0.5em; font-size: 2em; color: green;
+    position: absolute; 
+    top: 0.5em; 
+    left: 0.5em; 
+    font-size: 2em; 
+    color: green;
+    font-weight: 600;
 }
 .number{
     font-size: 3em; color: gray;
+}
+#container {
+	min-width: 310px;
+	max-width: 800px;
+	margin: 0 auto
 }

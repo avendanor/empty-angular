@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
 export class LoginLayoutComponent implements OnInit {
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.goTo();
+  }
 
   goTo(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/activity']);
   }
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: ''
+  apiUrl: 'https://ppwgioyvr5.execute-api.us-east-1.amazonaws.com/'
 };
 
 /*
